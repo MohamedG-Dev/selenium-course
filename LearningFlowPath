@@ -1,0 +1,7 @@
+Refer this file for the flow from basics to advanced concepts.
+
+1. Basic programs in selenium
+	package: src/main/java -> selenium.learning.java.selenium.basics
+	Class:
+			1. FirstProgram.java
+			2. Locators.java
