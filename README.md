@@ -55,4 +55,26 @@
 		5. linkText: driver.findElement(By.linkText("Forgot your password?")).click();
 		6. xpath: driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys("Shelby");
 		7. tagName: diver.findElement(By.tagName("a")).click();
-			 
+
+## Command to navigate to a URL:
+	Code: driver.navigate().to("https://rahulshettyacademy.com/AutomationPractice/");
+	
+## Command to navigate back:
+	Code: driver.navigate().back();
+	
+## Command to navigate forward:
+	Code: driver.navigate().forward();
+	
+## Command to refresh:
+	Code: driver.navigate().refresh();
+	
+## Code for Handling static dropdowns:
+	Package: import org.openqa.selenium.support.ui.Select;
+	Code: WebElement currenyDropDown = driver.findElement(By.xpath("//select[contains(@id,'DropDownListCurrency')]"));
+		Select dropdown = new Select(currenyDropDown);
+		dropdown.selectByIndex(3);
+		System.out.println(dropdown.getFirstSelectedOption().getText());
+		dropdown.selectByVisibleText("AED");
+		System.out.println(dropdown.getFirstSelectedOption().getText());
+		dropdown.selectByValue("INR");
+		System.out.println(dropdown.getFirstSelectedOption().getText());				 
