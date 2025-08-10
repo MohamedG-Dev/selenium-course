@@ -7,4 +7,12 @@ Refer this file for the flow from basics to advanced concepts.
 			2. Locators.java
 			3. Locators2.java
 			4. Locators3.java
-			5. StaticDropdown.java
+			5. BrowserActivities.java
+			6. StaticDropdown.java
+			7. UpdatedDropdown.java
+			8. AutoSuggestDropDowns.java
+			9. HandlingCheckboxes.java
+			10. HandlinCalendar.java
+			11. RadioButtonExample.java
+			12. AssignmentUI.java
+			13. HandlingAlert.java

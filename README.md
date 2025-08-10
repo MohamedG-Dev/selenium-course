@@ -77,4 +77,14 @@
 		dropdown.selectByVisibleText("AED");
 		System.out.println(dropdown.getFirstSelectedOption().getText());
 		dropdown.selectByValue("INR");
-		System.out.println(dropdown.getFirstSelectedOption().getText());				 
+		System.out.println(dropdown.getFirstSelectedOption().getText());	
+		
+## Command to check a checkbox is selected:
+	Code: driver.findElement(By.xpath("//input[contains(@id,'SeniorCitizenDiscount')]")).isSelected();
+	
+## Command(s) to handle alert:
+	Code: driver.switchTo().alert();
+		driver.switchTo().alert().getText();
+		driver.switchTo().alert().accept();
+		driver.switchTo().alert().dismiss();
+				 
