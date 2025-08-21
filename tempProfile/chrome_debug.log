@@ -1,0 +1,10 @@
+[5404:7624:0821/015155.818:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:202] No machine level policy manager exists.
+[5404:7624:0821/015157.653:INFO:CONSOLE:0] "[DOM] Found 2 elements with non-unique id #usertype: (More info: https://goo.gl/9p2vKq) %o %o", source: https://rahulshettyacademy.com/loginpagePractise/ (0)
+[5404:7624:0821/015157.654:INFO:CONSOLE:0] "[DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o", source: https://rahulshettyacademy.com/loginpagePractise/ (0)
+[5404:18976:0821/015200.958:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+[5404:18976:0821/015200.960:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+[5404:18976:0821/015229.460:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[5404:18976:0821/015329.114:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[5404:18976:0821/015509.908:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[19032:9080:0821/015537.236:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.
+[19032:9080:0821/015537.236:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.

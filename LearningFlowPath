@@ -12,8 +12,11 @@ Refer this file for the flow from basics to advanced concepts.
 			7. UpdatedDropdown.java
 			8. AutoSuggestDropDowns.java
 			9. HandlingCheckboxes.java
-			10. HandlinCalendar.java
-			11. RadioButtonExample.java
-			12. AssignmentUI.java
-			13. HandlingAlert.java
-			14. AddItemToCart.java
+			10. AssignmentCheckboxes.java
+			11. HandlinCalendar.java
+			12. RadioButtonExample.java
+			13. AssignmentUI.java
+			14. HandlingAlert.java
+			15. AddItemToCart.java
+			16. AssignmentExplicitWait.java
+			17. FluentWaitExample.java

@@ -87,4 +87,27 @@
 		driver.switchTo().alert().getText();
 		driver.switchTo().alert().accept();
 		driver.switchTo().alert().dismiss();
-				 
+
+## Command for Implicit wait:
+	Code: driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+	
+## Command for Explicit Wait - WebDriverWait
+	Package: import org.openqa.selenium.support.ui.WebDriverWait;
+	Code: WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.promoInfo")));
+		
+## Command for Explicit Wait - FluentWait
+	Package: import java.time.Duration;
+		import java.util.function.Function;
+		import org.openqa.selenium.support.ui.FluentWait;
+		import org.openqa.selenium.support.ui.Wait;
+	Code: Wait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(20))
+				.pollingEvery(Duration.ofSeconds(3)).ignoring(NoSuchElementException.class);
+		WebElement resultSuccess = wait.until(new Function<WebDriver, WebElement>() {
+			public WebElement apply(WebDriver driver) {
+				if (driver.findElement(By.xpath("//h4[text()='Hello World!']")).isDisplayed())
+					return driver.findElement(By.xpath("//h4[text()='Hello World!']"));
+				else
+					return null;
+			}
+		});
