@@ -112,7 +112,7 @@
 			}
 		});
 		
-## Code for Actions Class - moveTo, context click, sendKeys,double click
+## Code for Actions Class - moveTo, context click, sendKeys,double click, dragAndDrop
 	Package:	import org.openqa.selenium.interactions.Actions;
 			 	import org.openqa.selenium.Keys;
 	Code:	Actions actions = new Actions(driver);
@@ -123,6 +123,10 @@
 				.build().perform();
 		//************** Moves to specific element and right click(contextClick()) ********************/
 		actions.moveToElement(accountList).contextClick().build().perform();
+		//******************************* Drag and Drop **************************************************/
+		WebElement draggable = driver.findElement(By.id("draggable"));
+		WebElement droppable = driver.findElement(By.id("droppable"));
+		actions.dragAndDrop(draggable, droppable).build().perform();*
 		
 ## Switching Windows (Child/Parent) Code:
 	Package: 	import java.util.Set;
