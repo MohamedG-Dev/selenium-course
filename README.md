@@ -133,3 +133,9 @@
 				String childWindow = itr.next();
 				driver.switchTo().window(childWindow);
 				driver.switchTo().window(parentWindow);
+				
+## Frames:
+	Code:	name/id => driver.switchTo().frame("frame-top");
+			index	=>	driver.switchTo().frame(2);
+			WebElement =>	WebElement demoFrame = driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+							driver.switchTo().frame(demoFrame);
