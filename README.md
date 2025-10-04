@@ -111,3 +111,15 @@
 					return null;
 			}
 		});
+		
+## Code for Actions Class - moveTo, context click, sendKeys,double click
+	Package:	import org.openqa.selenium.interactions.Actions;
+			 	import org.openqa.selenium.Keys;
+	Code:	Actions actions = new Actions(driver);
+		WebElement searchBox = driver.findElement(By.cssSelector("input[id='twotabsearchtextbox']"));
+		WebElement accountList = driver.findElement(By.xpath("//a[@data-csa-c-slot-id='nav-link-accountList']"));
+		//*****send keys and double click***********//
+		actions.moveToElement(searchBox).click().keyDown(Keys.SHIFT).sendKeys("iphone").keyUp(Keys.SHIFT).doubleClick()
+				.build().perform();
+		//************** Moves to specific element ********************/
+		actions.moveToElement(accountList).contextClick().build().perform();
