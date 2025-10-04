@@ -121,5 +121,15 @@
 		//*****send keys and double click***********//
 		actions.moveToElement(searchBox).click().keyDown(Keys.SHIFT).sendKeys("iphone").keyUp(Keys.SHIFT).doubleClick()
 				.build().perform();
-		//************** Moves to specific element ********************/
+		//************** Moves to specific element and right click(contextClick()) ********************/
 		actions.moveToElement(accountList).contextClick().build().perform();
+		
+## Switching Windows (Child/Parent) Code:
+	Package: 	import java.util.Set;
+					import java.util.Iterator;
+	Code:		Set<String> windows = driver.getWindowHandles();
+				Iterator<String> itr = windows.iterator();
+				String parentWindow = itr.next();
+				String childWindow = itr.next();
+				driver.switchTo().window(childWindow);
+				driver.switchTo().window(parentWindow);
