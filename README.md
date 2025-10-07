@@ -141,5 +141,10 @@
 ## Frames:
 	Code:	name/id => driver.switchTo().frame("frame-top");
 			index	=>	driver.switchTo().frame(2);
-			WebElement =>	WebElement demoFrame = driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+			WebElement =>	WebElement demoFrame = driver.findElement(By.xpath("//iframe[@class='demo-frame']"))
 							driver.switchTo().frame(demoFrame);
+## JavascriptExecutor (Scroll example):
+	Package: import org.openqa.selenium.JavascriptExecutor;
+	Code:	JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollBy(0,500)");
+		jse.executeScript("document.querySelector('.tableFixHead').scrollTop=5000");
