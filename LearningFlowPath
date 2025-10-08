@@ -37,3 +37,8 @@ Refer this file for the flow from basics to advanced concepts.
 			1. SSLCertificationCheck.java
 			2. MaximizingWindowAndDeleteCookies.java
 			3. BrokenLinksExample.java
+
+3. Streams - Java
+	Package: package selenium.learning.java.streams;
+	Class:
+			1. StreamsExample.java

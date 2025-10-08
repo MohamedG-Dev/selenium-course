@@ -240,3 +240,14 @@
 		}
 		driver.quit();
 		softAssert.assertAll();
+		
+## Streams Java
+	Package: import java.util.stream.Stream;
+	Code:	Stream.of("apple", "alpha", "banana", "gauva", "butter", "box", "papaya", "button", "best", "bata", "beta",
+				"bad", "cucumber").filter(name -> name.endsWith("a")).map(String::toUpperCase)
+				.forEach(System.out::println);
+			//Another example
+			List<String> list = Arrays.asList("banana", "butter", "box", "button", "best", "bata", "beta", "bad");
+			System.out.println("**********Sort the list starts with 'b' to upper case and print them******************");
+			list.stream().filter(name -> name.startsWith("b")).sorted().map(String::toUpperCase)
+				.forEach(System.out::println);
