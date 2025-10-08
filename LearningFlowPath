@@ -1,6 +1,6 @@
 Refer this file for the flow from basics to advanced concepts.
 
-1. Basic programs in selenium
+1. Basic programs in Selenium
 	package: src/main/java -> selenium.learning.java.selenium.basics
 	Class:
 			1. FirstProgram.java
@@ -30,3 +30,10 @@ Refer this file for the flow from basics to advanced concepts.
 			25. UICalendarExample.java
 			26. JavaScriptExecutorExample.java
 			27. Assignment8_AutoSuggestiveDropDown.java
+
+2. Miscellaneous - SSL Certification Check
+	Package: package selenium.learning.java.selenium.miscellaneous;
+	class:
+			1. SSLCertificationCheck.java
+			2. MaximizingWindowAndDeleteCookies.java
+			3. BrokenLinksExample.java

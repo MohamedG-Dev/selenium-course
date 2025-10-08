@@ -24,7 +24,7 @@
 	Code:	driver.manage().window().maximize();
 	
 ## Command to hit a URL:
-	Code: driver.get("https://rahulshettyacademy.com/");
+	Code: driver.get("https://www.google.com/");
 	
 ## Command to get title of page:
 	Code: driver.getTitle();
@@ -57,7 +57,7 @@
 		7. tagName: diver.findElement(By.tagName("a")).click();
 
 ## Command to navigate to a URL:
-	Code: driver.navigate().to("https://rahulshettyacademy.com/AutomationPractice/");
+	Code: driver.navigate().to("https://www.examples/AutomationPractice/");
 	
 ## Command to navigate back:
 	Code: driver.navigate().back();
@@ -148,3 +148,95 @@
 	Code:	JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("window.scrollBy(0,500)");
 		jse.executeScript("document.querySelector('.tableFixHead').scrollTop=5000");
+		
+## ChromeOptions
+	Package:	import org.openqa.selenium.chrome.ChromeDriver;
+				import org.openqa.selenium.chrome.ChromeOptions;
+	Code: 		ChromeOptions options = new ChromeOptions();
+				options.setAcceptInsecureCerts(true);
+				WebDriver driver = new ChromeDriver(options);
+	ChromeOptions options = new ChromeOptions();
+
+	// Add the WebDriver proxy capability.
+	Proxy proxy = new Proxy();
+	proxy.setHttpProxy("myhttpproxy:3337");
+	options.setCapability("proxy", proxy);
+	
+	// Add a ChromeDriver-specific capability.
+	options.addExtensions(new File("/path/to/extension.crx"));
+	ChromeDriver driver = new ChromeDriver(options);
+	
+	//Use a custom profile
+	ChromeOptions options = new ChromeOptions();
+	options.addArguments("user-data-dir=/path/to/your/custom/profile");
+	
+	//Start Chrome maximized
+	ChromeOptions options = new ChromeOptions();
+	options.addArguments("start-maximized");
+	
+	Use a Chrome executable in a non-standard location
+	ChromeOptions options = new ChromeOptions();
+	options.setBinary("/path/to/other/chrome/binary");
+	
+	//Block dialog windows
+	ChromeOptions options = new ChromeOptions();options.setExperimentalOption("excludeSwitches",Arrays.asList("disable-popupblocking"));
+	
+	//Set download directory
+	ChromeOptions options = new ChromeOptions();
+	Map<String, Object> prefs = new HashMap<String, Object>();
+	prefs.put("download.default_directory", "/directory/path");
+	options.setExperimentalOption("prefs", prefs);
+	
+## Cookie(s)
+	Code: //Delete all cookies
+		driver.manage().deleteAllCookies();
+		//Delete a specific Cookie
+		driver.manage().deleteCookieNamed("name of the cookie=>eg: sessionKey");
+		
+		Set<Cookie> cookies = driver.manage().getCookies();
+	
+	//Get all cookies
+	for (Cookie ck : cookies) {
+	    System.out.println("Cookie Name: " + ck.getName());
+	    System.out.println("Cookie Value: " + ck.getValue());
+	    System.out.println("Cookie Domain: " + ck.getDomain());
+	    System.out.println("Cookie Expiry: " + ck.getExpiry());
+	    System.out.println("----------------------");
+	}
+	
+	//Get a specific cookie by name
+	Cookie sessionCookie = driver.manage().getCookieNamed("JSESSIONID");
+	System.out.println("Session Cookie Value: " + sessionCookie.getValue());
+	
+	//Add a new cookie
+	Cookie newCookie = new Cookie("testCookie", "12345");
+	driver.manage().addCookie(newCookie);
+	System.out.println("New cookie added successfully!");
+	
+## Taking Screenshot
+	Package: 	import java.io.File;
+				import org.apache.commons.io.FileUtils;
+				import org.openqa.selenium.OutputType;
+				import org.openqa.selenium.TakesScreenshot;
+	Code:		File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(file, new File(System.getProperty("user.dir")+"/screenshots/screenshot.png"));
+	
+## Broken Links Identification and SoftAssertion
+	Package:	import java.io.IOException;
+				import java.net.HttpURLConnection;
+				import java.net.URL;
+				import org.testng.asserts.SoftAssert;
+	Code:	SoftAssert softAssert = new SoftAssert();
+		List<WebElement> links = driver.findElements(By.cssSelector("li[class='gf-li'] a"));
+		for (WebElement link : links) {
+			String url = link.getAttribute("href");
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("HEAD");
+			connection.connect();
+			int responseCode = connection.getResponseCode();
+			// System.out.println(responseCode);
+			softAssert.assertTrue(responseCode < 400,
+					"The Broken link is: " + link.getText() + " with the status Code: " + responseCode);
+		}
+		driver.quit();
+		softAssert.assertAll();
