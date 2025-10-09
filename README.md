@@ -1,5 +1,8 @@
 #Selenium Concepts and Code examples
 
+#Go through the below file for learning path and selenium programs in detail
+	File Name: LearningFlowPath
+	
 ## Command to set the path for the browser drivers:
 	-> Chrome: System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\drivers\\chromedriver.exe");
 	-> Firefox: System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
@@ -265,3 +268,30 @@
 			4. toRightOf:
 				String labelText = driver.findElement(with(By.tagName("label")).toRightOf(By.id("inlineRadio1"))).getText();
 				System.out.println(labelText);
+				
+## Selenium 4 - Opening Multiple TABs/WINDOWs
+	Package: import org.openqa.selenium.WindowType;
+	Code: driver.get("https://www.google.com/");
+		//driver.switchTo().newWindow(WindowType.TAB);
+		driver.switchTo().newWindow(WindowType.WINDOW);
+		Set<String> windowHandles = driver.getWindowHandles();
+		Iterator<String> windows = windowHandles.iterator();
+		String parentWindow = windows.next();
+		String childWindow = windows.next();
+		driver.switchTo().window(childWindow);
+		driver.switchTo().window(parentWindow);
+		
+## Selenium 4 - Taking Element Screenshot
+	Package:	import java.io.File;
+				import java.io.IOException;
+				import org.apache.commons.io.FileUtils;
+				import org.openqa.selenium.OutputType;
+	Code:	WebElement name = driver.findElement(By.xpath("//input[@name='name']"));
+			name.sendKeys(courseName);
+			File file =name.getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(file, new File(System.getProperty("user.dir")+"/screenshot/elementScreenshot.png"));
+			
+## Selenium 4 - Capturing Height and Width of an Element
+	Code:	WebElement name = driver.findElement(By.xpath("//input[@name='name']"));
+			System.out.println(name.getRect().getDimension().getHeight());
+			System.out.println(name.getRect().getDimension().getWidth());

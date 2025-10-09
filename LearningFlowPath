@@ -49,3 +49,4 @@ Refer this file for the flow from basics to advanced concepts.
 	Package: package selenium.learning.selenium4;
 	Class:
 			1. RelativeLocatorsExample.java
+			2. InvokingMultipleWindows.java
