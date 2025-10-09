@@ -44,3 +44,8 @@ Refer this file for the flow from basics to advanced concepts.
 			1. StreamsExample.java
 			2. WebTablesSorting.java
 			3. WebTableFiltering.java
+			
+4. Selenium 4 - Latest Features:
+	Package: package selenium.learning.selenium4;
+	Class:
+			1. RelativeLocatorsExample.java

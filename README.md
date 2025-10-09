@@ -251,3 +251,17 @@
 			System.out.println("**********Sort the list starts with 'b' to upper case and print them******************");
 			list.stream().filter(name -> name.startsWith("b")).sorted().map(String::toUpperCase)
 				.forEach(System.out::println);
+				
+## Selenium 4 - Relative Locators
+	Package: import static org.openqa.selenium.support.locators.RelativeLocator.with;
+	Code: 	1. Above:
+				WebElement username = driver.findElement(By.cssSelector("input[name='name']"));
+				String text = driver.findElement(with(By.tagName("label")).above(username)).getText();
+				System.out.println(text);
+			2. Below:
+				driver.findElement(with(By.tagName("input")).below(By.xpath("//label[@for='dateofBirth']"))).click();
+			3. toLeftOf:
+				driver.findElement(with(By.tagName("input")).toLeftOf(By.xpath("//label[text()='Check me out if you Love 					IceCreams!']"))).click();
+			4. toRightOf:
+				String labelText = driver.findElement(with(By.tagName("label")).toRightOf(By.id("inlineRadio1"))).getText();
+				System.out.println(labelText);
