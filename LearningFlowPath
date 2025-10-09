@@ -38,7 +38,9 @@ Refer this file for the flow from basics to advanced concepts.
 			2. MaximizingWindowAndDeleteCookies.java
 			3. BrokenLinksExample.java
 
-3. Streams - Java
+3. Streams - Java, Selenium
 	Package: package selenium.learning.java.streams;
 	Class:
 			1. StreamsExample.java
+			2. WebTablesSorting.java
+			3. WebTableFiltering.java
