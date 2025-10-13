@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<test name="Test">
+		<groups>
+			<run>
+				<!-- <include name="smoke" /> -->
+				<!-- <include name="regression" /> -->
+				<exclude name="smoke" />
+			</run>
+		</groups>
+		<classes>
+			<class name="selenium.learning.java.testNG.Test1" />
+			<class name="selenium.learning.java.testNG.Test2" />
+			<class name="selenium.learning.java.testNG.WebApp" />
+			<class name="selenium.learning.java.testNG.MobileApp" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->

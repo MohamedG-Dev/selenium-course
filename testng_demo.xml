@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests" thread-count="5">
+	<parameter name="url" value="https://www.google.com"></parameter>
+	<listeners>
+	<listener class-name="selenium.learning.java.testNG.Listeners" />
+	</listeners>
+	<test name="Test">
+	<parameter name="name" value="Apple" />
+		<classes>
+			<class name="selenium.learning.java.testNG.Test1" />
+			<class name="selenium.learning.java.testNG.Test2" />
+		</classes>
+	</test> <!-- Test -->
+	<test name="webapp">
+	<parameter name="url" value="webapp.com/URL" />
+	<parameter name="name" value="loginWebApp" />
+		<classes>
+			<class name="selenium.learning.java.testNG.WebApp">
+				<methods>
+					<!-- <exclude name="webacess" /> --> <!-- webaccess method is not executed from 'WebApp' class -->
+					<exclude name="web.*" /> <!-- all the methods whose name starts with 'web' is not executed from 'WebApp' 
+						class -->
+				</methods>
+			</class>
+			<class name="selenium.learning.java.testNG.MobileApp">
+				<methods>
+					<!-- only below methods gets executed from 'MobileApp' class -->
+					<include name="mobilelogin" />
+					<include name="mobiletest" />
+					<include name="mobileacess" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite> <!-- Suite -->

@@ -295,3 +295,342 @@
 	Code:	WebElement name = driver.findElement(By.xpath("//input[@name='name']"));
 			System.out.println(name.getRect().getDimension().getHeight());
 			System.out.println(name.getRect().getDimension().getWidth());
+			
+## TestNG - testng.xml -> Class Level
+	<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+	<suite name="Suite">
+		<test name="Test">
+			<classes>
+				<class name="selenium.learning.java.testNG.Test1" />
+				<class name="selenium.learning.java.testNG.Test2" />
+			</classes>
+		</test> <!-- Test -->
+		<test name="webapp">
+			<classes>
+				<class name="selenium.learning.java.testNG.WebApp">
+					<methods>
+						<!-- <exclude name="webacess" /> --> <!-- webaccess method is not executed from 'WebApp' class -->
+						<exclude name="web.*" /> <!-- all the methods whose name starts with 'web' is not executed from 'WebApp' 
+							class -->
+					</methods>
+				</class>
+				<class name="selenium.learning.java.testNG.MobileApp">
+					<methods>
+						<!-- only below methods gets executed from 'MobileApp' class -->
+						<include name="mobilelogin" />
+						<include name="mobiletest" />
+						<include name="mobileacess" />
+					</methods>
+				</class>
+			</classes>
+		</test>
+	</suite> <!-- Suite -->
+
+## TestNG - testng.xml -> Package Level
+	<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+	<suite name="PackageRunSuite">
+		<test name="TestPackageRun">
+			<packages>
+				<package name="selenium.learning.java.testNG" />
+			</packages>
+		</test>
+	</suite> <!-- Suite -->	
+	
+## TestNG - Annotations Hierarchy:
+	@BeforeSuite -> @BeforeTest -> @BeforeClass -> @BeforeMethod -> @Test -> @AfterMethod -> @AfterClass -> @AfterTest -> @AfterSuite
+	
+## TestNG - Groups - Include
+	testng.xml file:
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+		<suite name="Suite">
+			<test name="Test">
+				<groups>
+					<run>
+						<!-- <include name="smoke" /> -->
+						<include name="regression" />
+					</run>
+				</groups>
+				<classes>
+					<class name="selenium.learning.java.testNG.Test1" />
+					<class name="selenium.learning.java.testNG.Test2" />
+					<class name="selenium.learning.java.testNG.WebApp" />
+					<class name="selenium.learning.java.testNG.MobileApp" />
+				</classes>
+			</test> <!-- Test -->
+		</suite> <!-- Suite -->
+	###Test1.java class:
+		package selenium.learning.java.testNG;
+		import org.testng.annotations.AfterClass;
+		import org.testng.annotations.AfterMethod;
+		import org.testng.annotations.AfterSuite;
+		import org.testng.annotations.AfterTest;
+		import org.testng.annotations.BeforeClass;
+		import org.testng.annotations.BeforeMethod;
+		import org.testng.annotations.BeforeSuite;
+		import org.testng.annotations.BeforeTest;
+		import org.testng.annotations.Test;
+		
+		public class Test1 {
+		
+			@BeforeSuite
+			public void beforeSuite() {
+				System.out.println("Before Suite annotation is triggered");
+			}
+		
+			@AfterSuite
+			public void afterSuite() {
+				System.out.println("After Suite annotation is triggered");
+			}
+		
+			@BeforeTest
+			public void beforeTest() {
+				System.out.println("Before test annotation is triggered");
+			}
+		
+			@AfterTest
+			public void afterTest() {
+				System.out.println("After test annotation is triggered");
+			}
+		
+			@BeforeClass
+			public void beforeClass() {
+				System.out.println("BeforeClass Annotation is triggered for class Test1");
+			}
+		
+			@AfterClass
+			public void afterClass() {
+				System.out.println("AfterClass Annotation is triggered for class Test1");
+			}
+		
+			@BeforeMethod
+			public void beforeMethod() {
+				System.out.println("Before method annotation is triggered for Test1 Class");
+			}
+		
+			@AfterMethod
+			public void afterMethod() {
+				System.out.println("After method annotation is triggered Test1 Class");
+			}
+		
+			@Test(groups = { "smoke" })
+			public void test1() {
+				System.out.println("Test1");
+			}
+		
+			@Test(groups = { "regression" })
+			public void test2() {
+				System.out.println("Test2");
+			}
+		
+		}
+## TestNG - Groups - Exclude
+	testng.xml
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+		<suite name="Suite">
+			<test name="Test">
+				<groups>
+					<run>
+						<!-- <include name="smoke" /> -->
+						<!-- <include name="regression" /> -->
+						<exclude name="smoke" />
+					</run>
+				</groups>
+				<classes>
+					<class name="selenium.learning.java.testNG.Test1" />
+					<class name="selenium.learning.java.testNG.Test2" />
+					<class name="selenium.learning.java.testNG.WebApp" />
+					<class name="selenium.learning.java.testNG.MobileApp" />
+				</classes>
+			</test> <!-- Test -->
+		</suite> <!-- Suite -->
+				
+## TestNG - dependsOnMethods attribute: @Test(dependsOnMethods={"test5"})
+	@Test(groups = { "regression" },dependsOnMethods={"test5"})
+	public void test3() {
+		System.out.println("test3");
+	}
+	@Test(timeOut=5000)
+	public void test5() {
+		System.out.println("test5");
+	}
+## TestNG - Skipping a test case: @Test(enabled=false)
+	@Test(enabled=false)
+	public void test6() {
+		System.out.println("test6");
+	}
+## TestNG - timeOut: @Test(timeOut=5000)
+	@Test(timeOut=5000)
+	public void test5() {
+		System.out.println("test5");
+	}
+	
+## TestNG - @Parameters Annotation:
+	testng.xml file:
+			<?xml version="1.0" encoding="UTF-8"?>
+			<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+			<suite name="Suite">
+				<parameter name="url" value="https://www.google.com"></parameter>
+				<test name="Test">
+					<classes>
+						<class name="selenium.learning.java.testNG.Test1" />
+						<class name="selenium.learning.java.testNG.Test2" />
+					</classes>
+				</test> <!-- Test -->
+				<test name="webapp">
+				<parameter name="url" value="webapp.com/URL" />
+					<classes>
+						<class name="selenium.learning.java.testNG.WebApp">
+							<methods>
+								<!-- <exclude name="webacess" /> --> <!-- webaccess method is not executed from 'WebApp' class -->
+								<exclude name="web.*" /> <!-- all the methods whose name starts with 'web' is not executed from 'WebApp' 
+									class -->
+							</methods>
+						</class>
+						<class name="selenium.learning.java.testNG.MobileApp">
+							<methods>
+								<!-- only below methods gets executed from 'MobileApp' class -->
+								<include name="mobilelogin" />
+								<include name="mobiletest" />
+								<include name="mobileacess" />
+							</methods>
+						</class>
+					</classes>
+				</test>
+			</suite> <!-- Suite -->
+			
+			#####Java Code:
+					@Parameters({"url"})
+					@Test
+					public void test2(String urlName) {
+						System.out.println("Test2");
+						System.out.println("URL value /is: "+urlName); // o/p: https://www.google.com
+					}
+					@Parameters({"url"})
+					@Test(groups = { "smoke", "regression" })
+					public void demo(String url) {
+						System.out.println("web demo");
+						System.out.println("Web demo url: "+url); // o/p: webapp.com/URL
+					}
+					
+## TestNG - DataProvider
+	@Test(dataProvider="dataProviderdemo1")
+	public void testWebLogin(String userName,String password) {
+		System.out.println("Web Login username: "+userName);
+		System.out.println("Web Login password: "+password);
+	}
+
+	@DataProvider(name = "dataProviderdemo1")
+	public Object[][] getData() {
+		Object[][] data = new Object[3][2];
+		data[0][0]="username->Rohit";
+		data[0][1]="password->rh123";
+		data[1][0]="username->Virat";
+		data[1][1]="password->vk234";
+		data[2][0]="username->MSD";
+		data[2][1]="passwrd->msd234";
+		return data;
+	}
+	
+## TestNG - Listeners
+		package selenium.learning.java.testNG;
+		
+		import org.testng.ITestContext;
+		import org.testng.ITestListener;
+		import org.testng.ITestResult;
+		
+		public class Listeners implements ITestListener{
+		
+			@Override
+			public void onTestStart(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestStart(result);
+			}
+		
+			@Override
+			public void onTestSuccess(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestSuccess(result);
+				System.out.println("I have successfully used/executed ITestListeners");
+			}
+		
+			@Override
+			public void onTestFailure(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestFailure(result);
+				System.out.println("the test method failed is: "+result.getName());
+			}
+		
+			@Override
+			public void onTestSkipped(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestSkipped(result);
+			}
+		
+			@Override
+			public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestFailedButWithinSuccessPercentage(result);
+			}
+		
+			@Override
+			public void onTestFailedWithTimeout(ITestResult result) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onTestFailedWithTimeout(result);
+			}
+		
+			@Override
+			public void onStart(ITestContext context) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onStart(context);
+			}
+		
+			@Override
+			public void onFinish(ITestContext context) {
+				// TODO Auto-generated method stub
+				ITestListener.super.onFinish(context);
+			}
+			
+		
+		}
+## TestNG - Running Parallel: <suite name="Suite" parallel="tests" thread-count="5">
+		<?xml version="1.0" encoding="UTF-8"?>
+		<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+		<suite name="Suite" parallel="tests" thread-count="5">
+			<parameter name="url" value="https://www.google.com"></parameter>
+			<listeners>
+			<listener class-name="selenium.learning.java.testNG.Listeners" />
+			</listeners>
+			<test name="Test">
+			<parameter name="name" value="Apple" />
+				<classes>
+					<class name="selenium.learning.java.testNG.Test1" />
+					<class name="selenium.learning.java.testNG.Test2" />
+				</classes>
+			</test> <!-- Test -->
+			<test name="webapp">
+			<parameter name="url" value="webapp.com/URL" />
+			<parameter name="name" value="loginWebApp" />
+				<classes>
+					<class name="selenium.learning.java.testNG.WebApp">
+						<methods>
+							<!-- <exclude name="webacess" /> --> <!-- webaccess method is not executed from 'WebApp' class -->
+							<exclude name="web.*" /> <!-- all the methods whose name starts with 'web' is not executed from 'WebApp' 
+								class -->
+						</methods>
+					</class>
+					<class name="selenium.learning.java.testNG.MobileApp">
+						<methods>
+							<!-- only below methods gets executed from 'MobileApp' class -->
+							<include name="mobilelogin" />
+							<include name="mobiletest" />
+							<include name="mobileacess" />
+						</methods>
+					</class>
+				</classes>
+			</test>
+		</suite> <!-- Suite -->
+			

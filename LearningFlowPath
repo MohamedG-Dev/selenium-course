@@ -50,3 +50,10 @@ Refer this file for the flow from basics to advanced concepts.
 	Class:
 			1. RelativeLocatorsExample.java
 			2. InvokingMultipleWindows.java
+
+5.TestNG
+	Package: package selenium.learning.java.testNG;
+	Classes: MobileApp.java, Test1.java, Test2.java, WebApp.java
+	TestNG.XML files: testng_demo.xml -> (for Class level)
+					  testng_packageDemo.xml -> (for Package level)
+					  testng_groups.xml -> for(running in groups eg: smoke, regression)

@@ -3,11 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="selenium.learning.java.streams.StreamsExample">
+      <class name="selenium.learning.java.testNG.WebApp">
         <methods>
-          <include name="mergeTwoLists"/>
+          <include name="weblogin1"/>
+          <include name="demo"/>
         </methods>
-      </class> <!-- selenium.learning.java.streams.StreamsExample -->
+      </class> <!-- selenium.learning.java.testNG.WebApp -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
