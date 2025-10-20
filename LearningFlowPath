@@ -37,6 +37,7 @@ Refer this file for the flow from basics to advanced concepts.
 			1. SSLCertificationCheck.java
 			2. MaximizingWindowAndDeleteCookies.java
 			3. BrokenLinksExample.java
+			4. ExtentReportsExample.java
 
 3. Streams - Java, Selenium
 	Package: package selenium.learning.java.streams;
@@ -57,3 +58,25 @@ Refer this file for the flow from basics to advanced concepts.
 	TestNG.XML files: testng_demo.xml -> (for Class level)
 					  testng_packageDemo.xml -> (for Package level)
 					  testng_groups.xml -> for(running in groups eg: smoke, regression)
+					  
+6. Framework Creation
+	Packages:	src/main/java
+				1. selenium.learning.framework.pageObjects
+					Classes: CartPage.java, CheckoutPage.java, ConfirmationPage.java, LoginPage.java, OrdersPage.java, ProductCatalog.java
+				2. selenium.learning.framework.utilities
+					Classes: Utility.java
+				
+				src/test/java
+				1. selenium.learning.framework.testComponents
+					Classes: BaseTest.java, JSONDataReader.java, Listeners.java, RetryFailureTests.java
+				2. selenium.learning.framework.tests
+					Classes: ErrorValidations.java, SubmitOrderTest.java
+					
+				src/test/resources/
+					Folder:	extentReports -> extentReports.html
+					globalProperties.properties
+					purchaseOrder.json
+					
+	testng.xml files/folders: testngXMLFiles, testSuites
+							
+	

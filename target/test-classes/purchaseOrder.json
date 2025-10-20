@@ -1,0 +1,14 @@
+[
+	{
+		"email": "thomasshelby@gmail.com",
+		"password": "Thomas@123",
+		"product": "ZARA COAT 3",
+		"country": "India"
+	},
+	{
+		"email": "adashelby@gmail.com",
+		"password": "Adashelby@123",
+		"product": "ADIDAS ORIGINAL",
+		"country": "India"
+	}
+]

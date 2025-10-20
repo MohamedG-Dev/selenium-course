@@ -634,3 +634,88 @@
 			</test>
 		</suite> <!-- Suite -->
 			
+## Page Object Model (POM) and Page Factory:
+	import org.openqa.selenium.WebDriver;
+	import org.openqa.selenium.WebElement;
+	import org.openqa.selenium.support.FindBy;
+	import org.openqa.selenium.support.PageFactory;
+	
+	import selenium.learning.framework.utilities.Utility;
+	
+	public class LoginPage extends Utility {
+		private WebDriver driver;
+	
+		public LoginPage(WebDriver driver) {
+			super(driver);
+			this.driver = driver;
+			PageFactory.initElements(driver, this);
+		}
+	
+		@FindBy(id = "userEmail")
+		private WebElement userEmail;
+	
+		@FindBy(id = "userPassword")
+		private WebElement userPassword;
+	
+		@FindBy(id = "login")
+		private WebElement loginBtn;
+	
+		public void goTo() {
+			driver.get("https://rahulshettyacademy.com/client/");
+		}
+	
+		public ProductCatalog loginApplication(String emailID, String password) {
+			userEmail.sendKeys(emailID);
+			userPassword.sendKeys(password);
+			loginBtn.click();
+			return new ProductCatalog(driver);
+		}
+	}
+	
+## Properties File:
+	Package:	import java.util.Properties;
+				import java.io.FileInputStream;
+	Code:	Properties prop = new Properties();
+			FileInputStream fis;
+			fis = new FileInputStream(
+					System.getProperty("user.dir") + "/src/test/resources/globalProperties.properties");
+			prop.load(fis);
+			String browserName = prop.getProperty("browser");
+
+## @DataProvider using JSON File:
+	import java.io.File;
+	import java.io.IOException;
+	import java.util.HashMap;
+	import java.util.List;
+	
+	import org.apache.commons.io.FileUtils;
+	
+	import tools.jackson.core.type.TypeReference;
+	import tools.jackson.databind.ObjectMapper;
+	
+	public class JSONDataReader {
+	
+		public List<HashMap<String, String>> getJsonDataToMap() {
+			String jsonContent;
+			List<HashMap<String, String>> data = null;
+			try {
+				jsonContent = FileUtils.readFileToString(
+						new File(System.getProperty("user.dir") + "/src/test/resources/purchaseOrder.json"));
+				ObjectMapper mapper = new ObjectMapper();
+				data = mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+				});
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return data;
+		}
+	
+	}
+	
+	//@DataProvider Annotation
+		@DataProvider(name = "testData")
+		public Object[][] getData() {
+			List<HashMap<String, String>> data = getJsonDataToMap("/src/test/resources/purchaseOrder.json");
+			return new Object[][] { { data.get(0) }, { data.get(1) } };
+		}
+		
