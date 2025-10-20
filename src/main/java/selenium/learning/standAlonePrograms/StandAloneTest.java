@@ -16,6 +16,7 @@ import org.testng.Assert;
 public class StandAloneTest {
 
 	public static void main(String[] args) {
+		//End2End Complete flow of Pruchase product
 		String productName = "ZARA COAT 3";
 		String countryName = "India";
 		WebDriver driver = new ChromeDriver();
