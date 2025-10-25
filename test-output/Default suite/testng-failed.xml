@@ -3,13 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="selenium.learning.cucumber.runners.SubmitOrderTestRunner">
+      <class name="selenium.learning.java.selenium.miscellaneous.UploadDowloadExample">
         <methods>
-          <include name="setUpClass"/>
-          <include name="tearDownClass"/>
-          <include name="runScenario" invocation-numbers="0"/>
+          <include name="uploadDownloadExcelFile"/>
         </methods>
-      </class> <!-- selenium.learning.cucumber.runners.SubmitOrderTestRunner -->
+      </class> <!-- selenium.learning.java.selenium.miscellaneous.UploadDowloadExample -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

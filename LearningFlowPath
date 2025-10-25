@@ -78,5 +78,13 @@ Refer this file for the flow from basics to advanced concepts.
 					purchaseOrder.json
 					
 	testng.xml files/folders: testngXMLFiles, testSuites
+	
+7. Excel Reading Data:
+	Packages: package selenium.learning.java.excelDemo;
+	Classes:	ReadExcelData
+	
+8. Download and Upload Excel File:
+	Packages: package selenium.learning.java.selenium.miscellaneous;
+	Class:	UploadDowloadExample
 							
 	
