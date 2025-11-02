@@ -87,4 +87,24 @@ Refer this file for the flow from basics to advanced concepts.
 	Packages: package selenium.learning.java.selenium.miscellaneous;
 	Class:	UploadDowloadExample
 							
+9. Selenium 4 - ChromeDevTools
+		Package: selenium.learning.selenium4;
+		Class:	ChromeDevToolsMobileEmulatorTest.java
+				CDPCommandsTest.java
+				CDPSetGeoLocations.java
+				CDPNetworkLogActivity.java
+				NetworkMocking.java
+				CDPNetworkFailedRequest.java
+				CDPBlockUnWantedNetworkURLs.java
+				CDPNetworkSpeedEmulation.java
+				CDPBasicAuthentication.java
+				CDPConsoleLogCapture.java
+				
+10. JDBC - DataBase Connectivity:
+		Package: selenium.learning.jdbcTesting;
+		Class:	JDBCConnection
+
+11. HandlingWindow popups and AutoIT
+	Package: selenium.learning.windowAutoIT;
+	Class:	HandlingWindowPopus
 	

@@ -8,11 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import selenium.learning.framework.pageObjects.CartPage;
-import selenium.learning.framework.pageObjects.CheckoutPage;
-import selenium.learning.framework.pageObjects.ConfirmationPage;
-import selenium.learning.framework.pageObjects.OrdersPage;
-import selenium.learning.framework.pageObjects.ProductCatalog;
+import selenium.learning.framework.pageObjects.*;
 import selenium.learning.framework.testComponents.BaseTest;
 import selenium.learning.framework.testComponents.RetryFailureTests;
 
@@ -22,6 +18,19 @@ public class SubmitOrderTest extends BaseTest {
 
 	@Test(dataProvider = "testData", groups = { "purchase" }, retryAnalyzer = RetryFailureTests.class)
 	public void submitOrder(Map<String, String> map) {
+		RegistrationPage registrationPage = new RegistrationPage(driver);
+
+		registrationPage.fillAndSubmit(
+				"Thomas",                        // firstName
+				"Shelby",                        // lastName
+				map.get("email"),                // email
+				"9999999999",                    // mobile
+				"Engineer",                      // occupation (visible text)
+				"Male",                          // gender
+				map.get("password"),             // password
+				true                             // accept terms
+		);
+
 		ProductCatalog catalog = loginPage.loginApplication(map.get("email"), map.get("password"));
 
 		catalog.addProductToCart(map.get("product"));

@@ -718,4 +718,369 @@
 			List<HashMap<String, String>> data = getJsonDataToMap("/src/test/resources/purchaseOrder.json");
 			return new Object[][] { { data.get(0) }, { data.get(1) } };
 		}
+
+## Selenium 4 - Chrome Devtools Protocol(CDP):
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.emulation.Emulation;
 		
+		public class ChromeDevToolsMobileEmulatorTest {
+		
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				// send commands to CDP methods -> CDP method will invoke and get access to
+				// chrome dev tools
+				devTools.send(Emulation.setDeviceMetricsOverride(600, 1000, 50, true, Optional.empty(), Optional.empty(),
+						Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
+						Optional.empty(), Optional.empty(), Optional.empty()));
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.className("navbar-toggler")).click();
+				Thread.sleep(3000);
+				driver.findElement(By.linkText("Library")).click();
+			}
+		}
+		
+## Selenium  - CDP - using executeCdpCommand() method
+		import java.util.HashMap;
+		import java.util.LinkedHashMap;
+		import java.util.Map;
+		
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		
+		public class CDPCommandsTest {
+		
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+				params.put("width",600);
+				params.put("height", 1000);
+				params.put("deviceScaleFactor", 50);
+				params.put("mobile", true);
+				driver.executeCdpCommand("Emulation.setDeviceMetricsOverride", params);
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.className("navbar-toggler")).click();
+				Thread.sleep(3000);
+				driver.findElement(By.linkText("Library")).click();
+			}
+		}
+			
+## Selenium - CDP - Localization Testing - Set Geo Locations
+		import java.util.HashMap;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.Keys;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		
+		public class CDPSetGeoLocations {
+		
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools=driver.getDevTools();
+				devTools.createSession();
+				HashMap<String,Object> coordinates = new HashMap<>();
+				coordinates.put("latitute", 35);
+				coordinates.put("longitude",6);
+				coordinates.put("accuracy",1);
+				driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+				driver.get("http://www.google.com");
+				driver.findElement(By.name("q")).sendKeys("netflix",Keys.ENTER);
+				Thread.sleep(3000);
+				driver.findElements(By.cssSelector(".LC20lb")).get(0).click();
+				Thread.sleep(3000);
+				String title = driver.findElement(By.tagName("h1")).getText();
+				System.out.println(title);
+			}
+		}
+
+## Selenium - CDP - Exxtract Network - Requests,Response and Status Code:
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.network.Network;
+		import org.openqa.selenium.devtools.v141.network.model.Request;
+		import org.openqa.selenium.devtools.v141.network.model.Response;
+		
+		public class CDPNetworkLogActivity {
+		
+			public static void main(String[] args) {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
+						Optional.empty()));
+				devTools.addListener(Network.requestWillBeSent(), request -> {
+					Request req = request.getRequest();
+					//System.out.println(req.getUrl());
+				});
+				// Event wil get fired
+				devTools.addListener(Network.responseReceived(), response -> {
+					Response res = response.getResponse();
+					//System.out.println(res.getUrl());
+					//System.out.println(res.getStatus());
+					if(res.getStatus().toString().startsWith("4"))
+						System.out.println(res.getUrl()+"is failing with status code: "+res.getStatus());
+				});
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.cssSelector("button[routerlink*='library']")).click();
+			}
+		}
+				
+## Selenium - CDP - NetworkMocking
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.fetch.Fetch;
+		import org.openqa.selenium.devtools.v141.network.model.Request;
+		
+		public class NetworkMocking {
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				devTools.send(Fetch.enable(Optional.empty(), Optional.empty()));
+				devTools.addListener(Fetch.requestPaused(), request -> {
+					Request req = request.getRequest();
+					if (req.getUrl().contains("shetty")) {
+						String mockURL = req.getUrl().replace("=shetty", "=BadGuy");
+						System.out.println(mockURL);
+						devTools.send(Fetch.continueRequest(request.getRequestId(), Optional.of(mockURL),
+								Optional.of(req.getMethod()), Optional.empty(), Optional.empty(), Optional.empty()));
+					} else {
+						devTools.send(Fetch.continueRequest(request.getRequestId(), Optional.of(req.getUrl()),
+								Optional.of(req.getMethod()), Optional.empty(), Optional.empty(), Optional.empty()));
+					}
+				});
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.cssSelector("button[routerlink*='library']")).click();
+				Thread.sleep(3000);
+				System.out.println(driver.findElement(By.tagName("p")).getText());
+				driver.quit();
+			}
+		}
+		
+## Selenium - CDP - Failed Network Calls
+		import java.util.List;
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.fetch.Fetch;
+		import org.openqa.selenium.devtools.v141.fetch.model.RequestPattern;
+		import org.openqa.selenium.devtools.v141.fetch.model.RequestStage;
+		import org.openqa.selenium.devtools.v141.network.model.ErrorReason;
+		import org.openqa.selenium.devtools.v141.network.model.ResourceType;
+		
+		public class CDPNetworkFailedRequest {
+			public static void main(String[] args) {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				Optional<List<RequestPattern>> pattern=Optional.of(List.of(new RequestPattern(Optional.of("*GetBook*"),Optional.<ResourceType>empty(),Optional.<RequestStage>empty())));
+				devTools.send(Fetch.enable(pattern, Optional.empty()));
+				devTools.addListener(Fetch.requestPaused(), request ->{
+					devTools.send(Fetch.failRequest(request.getRequestId(), ErrorReason.FAILED));
+				});
+		
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.cssSelector("button[routerlink*='library']")).click();
+			}
+		}
+					
+## Selenium - CDP - Blocking Unwanted Network request calls to speedup the execution
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.network.Network;
+		import com.google.common.collect.ImmutableList;
+		
+		public class CDPBlockUnwatedNetworkURLs {
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				 DevTools devTools=driver.getDevTools();
+				 devTools.createSession();
+				 devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty()));
+				 devTools.send(Network.setBlockedURLs(ImmutableList.of("*.jpg","*.css")));
+				 long startTime = System.currentTimeMillis();
+				 driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				 driver.findElement(By.cssSelector("a[routerlink*='products']")).click();
+				 Thread.sleep(3000);
+				 driver.findElement(By.linkText("Selenium")).click();
+				 Thread.sleep(2000);
+				 driver.findElement(By.cssSelector(".add-to-cart")).click();
+				 Thread.sleep(2000);
+				 System.out.println(driver.findElement(By.tagName("p")).getText());
+				 driver.quit();
+				 long endTime = System.currentTimeMillis();
+				 System.out.println("Difference Time: "+(endTime-startTime));
+			}
+		}
+
+## Selenium - CDP - Network Speedup Execution
+		import java.util.Optional;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.devtools.DevTools;
+		import org.openqa.selenium.devtools.v141.network.Network;
+		import org.openqa.selenium.devtools.v141.network.model.ConnectionType;
+		
+		public class CDPNetworkSpeedEmulation {
+			public static void main(String[] args) {
+				ChromeDriver driver = new ChromeDriver();
+				DevTools devTools = driver.getDevTools();
+				devTools.createSession();
+				devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
+						Optional.empty()));
+				devTools.send(Network.emulateNetworkConditions(false, 3000, 20000, 100000, Optional.of(ConnectionType.ETHERNET),
+						Optional.empty(), Optional.empty(), Optional.empty()));
+				devTools.addListener(Network.loadingFailed(), property -> {
+					System.out.println(property.getErrorText());
+					System.out.println(property.getTimestamp());
+				});
+				long startTime = System.currentTimeMillis();
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.cssSelector("button[routerlink*='library']")).click();
+				driver.quit();
+				long endTime = System.currentTimeMillis();
+				System.out.println(endTime - startTime);
+			}
+		}
+		
+## Selenium - CDP - Basic Authentication using uiPredicate function
+		import java.net.URI;
+		import java.util.function.Predicate;
+		import org.openqa.selenium.HasAuthentication;
+		import org.openqa.selenium.UsernameAndPassword;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		
+		public class CDPBasicAuthentication {
+			public static void main(String[] args) {
+				ChromeDriver driver = new ChromeDriver();
+				Predicate<URI> uriPredicate = uri -> uri.getHost().contains("httpbin.org");
+		
+				((HasAuthentication) driver).register(uriPredicate, UsernameAndPassword.of("foo", "bar"));
+				driver.get("http://httpbin.org/basic-auth/foo/bar");
+			}
+		}
+
+## Selenium - CDP - Console Log Capture
+		import java.util.List;
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		import org.openqa.selenium.logging.LogEntries;
+		import org.openqa.selenium.logging.LogEntry;
+		import org.openqa.selenium.logging.LogType;
+		
+		public class CDPConsoleLogCapture {
+			public static void main(String[] args) throws InterruptedException {
+				ChromeDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				// Listeners onTestFailure()
+				driver.get("https://rahulshettyacademy.com/angularAppdemo/");
+				driver.findElement(By.linkText("Browse Products")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.partialLinkText("Selenium")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.cssSelector(".add-to-cart")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.linkText("Cart")).click();
+				Thread.sleep(2000);
+				driver.findElement(By.id("exampleInputEmail1")).clear();
+				Thread.sleep(2000);
+				driver.findElement(By.id("exampleInputEmail1")).sendKeys("2");
+				Thread.sleep(2000);
+				LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+				List<LogEntry> allLogs = logs.getAll();
+				allLogs.forEach(log -> System.out.println(log.getMessage()));
+				driver.quit();
+			}
+		}
+			
+## 	JDBC connection:
+
+	<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11 -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>23.26.0.0.0</version>
+		</dependency>
+	</dependencies>
+	
+	####JAVA CODE:		
+		import java.sql.Connection;
+		import java.sql.DriverManager;
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		import java.sql.Statement;
+		
+		public class JDBCConnection {
+			public static void main(String[] args) {
+				String databaseURL = "jdbc:oracle:thin:@//localhost:1521/orclpdb";
+				String username = "hr";
+				String password = "hr";
+				try {
+					Connection connection =DriverManager.getConnection(databaseURL, username, password);
+					System.out.println("Connected to Oracle Database!");
+					Statement statement = connection.createStatement();
+					String query="select * from employees where employee_id=100";
+					ResultSet result = statement.executeQuery(query);
+					while(result.next()) {
+						System.out.println(result.getString("employee_id"));
+						System.out.println(result.getString("first_name"));
+					}
+		
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+## Handling Window popups:
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.chrome.ChromeDriver;
+		
+		public class HandlingWindowPopus {
+			public static void main(String[] args) {
+				WebDriver driver = new ChromeDriver();
+				driver.manage().window().maximize();
+				driver.get("http://admin:admin@the-internet.herokuapp.com/");
+				driver.findElement(By.linkText("Basic Auth")).click();
+			}
+		}
+		
+## AUTO IT:
+			import java.io.IOException;
+			import org.openqa.selenium.By;
+			import org.openqa.selenium.WebDriver;
+			import org.openqa.selenium.chrome.ChromeDriver;
+			
+			public class UploadingFile {
+				public static void main(String[] args) throws InterruptedException, IOException {
+					WebDriver driver = new ChromeDriver();
+					driver.manage().window().maximize();
+					driver.get("https://www.ilovepdf.com/word_to_pdf");
+				driver.findElement(By.id("pickfiles")).click();
+				Thread.sleep(3000);
+				Runtime.getRuntime().exec(System.getProperty("user.dir")+"\\autoITExeFile\\testfile.exe");
+				driver.quit();
+			}
+		}
+				
+						
